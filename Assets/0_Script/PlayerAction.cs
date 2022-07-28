@@ -20,15 +20,21 @@ public class PlayerAction : MonoBehaviour
         anim = GetComponent<Animator>();
     }
     void Update() {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
-        if(hDown) { isHorizontalMove = true; }
-        else if(vDown) { isHorizontalMove = false; }
-        else if(vUp || hUp) { isHorizontalMove = h != 0; }
+        h = gManager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
+        v = gManager.isAction ? 0 : Input.GetAxisRaw("Vertical");
+        bool hDown = gManager.isAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = gManager.isAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = gManager.isAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = gManager.isAction ? false : Input.GetButtonUp("Vertical");
+        if(hDown) {
+            isHorizontalMove = true;
+        }
+        else if(vDown) {
+            isHorizontalMove = false;
+        }
+        else if(vUp || hUp) {
+            isHorizontalMove = h != 0;
+        }
         //애니메이션 
         if(anim.GetInteger("HAxis") != h) {
             anim.SetBool("isChange", true);
@@ -40,12 +46,22 @@ public class PlayerAction : MonoBehaviour
         }
 		else { anim.SetBool("isChange", false); }
         //이동 
-        if(vDown && v == 1) dirVec = Vector3.up;
-        else if(vDown && v == -1) { dirVec = Vector3.down; }
-        else if(hDown && h == -1) { dirVec = Vector3.left; }
-        else if(hDown && h == 1) { dirVec = Vector3.right; }
+        if(vDown && v == 1) {
+            dirVec = Vector3.up;
+        }
+        else if(vDown && v == -1) {
+            dirVec = Vector3.down;
+        }
+        else if(hDown && h == -1) {
+            dirVec = Vector3.left;
+        }
+        else if(hDown && h == 1) {
+            dirVec = Vector3.right;
+        }
 		//스캔 오브젝트 
-		if(Input.GetButtonDown("Jump") && scanObj != null) { gManager.Acttion(scanObj); }
+		if(Input.GetButtonDown("Jump") && scanObj != null) {
+            gManager.Action(scanObj);
+        }
     }
 	private void FixedUpdate() {
         //이동 
@@ -54,7 +70,11 @@ public class PlayerAction : MonoBehaviour
         //레이캐스트 
         Debug.DrawRay(rigid.position, dirVec * 1f, new Color(1, 1, 0));
         RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 0.7f, LayerMask.GetMask("Obj"));
-        if(rayHit.collider != null) { scanObj = rayHit.collider.gameObject; }
-        else { scanObj = null; }
+        if(rayHit.collider != null) {
+            scanObj = rayHit.collider.gameObject;
+        }
+        else {
+            scanObj = null;
+        }
 	}
 }
