@@ -9,25 +9,30 @@ public class TalkManager : MonoBehaviour
 	public Sprite[] portraitArr;
 
 	private void Awake() {
-		talkData = new Dictionary<int, string[]>();
-		protraitDate = new Dictionary<int, Sprite>();
+		talkData = new Dictionary<int, string[]>(); //딕셔너리 아이디, 문자내용
+		protraitDate = new Dictionary<int, Sprite>(); //딕셔너리 아이디, 스프라이트
 		GenerateData();
 	}
 	void GenerateData() {
 		talkData.Add(1001, new string[] { "안녕?:0", "넌 누구니?:3" });
-		talkData.Add(1002, new string[] { "왜?:1", "넌 저리로가:3", "누구니?:0" });
+		talkData.Add(2002, new string[] { "왜?:1", "넌 저리로가:3", "누구니?:2" });
 		talkData.Add(101, new string[] { "평범한 나무상자" });
 		talkData.Add(102, new string[] { "평범한 나무책상" });
 		talkData.Add(103, new string[] { "흔한 돌벽" });
+		//퀘스트 이벤트
+		talkData.Add(10 + 1001, new string[] { "어서와?:0", "이 마을 왜이럼?:3" });
+		talkData.Add(11 + 2002, new string[] { "바쁘니까:0", "저리가라:3", "시르면 말고:2"});
+		talkData.Add(20 + 1001, new string[] { "오호호호호:0", "히히히히:3", "하하하:2"});
+		talkData.Add(20 + 5000, new string[] { "동전"});
+		talkData.Add(21 + 2001, new string[] { "오:0", "오예:3", "땡큐감사:2"});
 		protraitDate.Add(1001 + 0, portraitArr[0]);
 		protraitDate.Add(1001 + 1, portraitArr[1]);
 		protraitDate.Add(1001 + 2, portraitArr[2]);
 		protraitDate.Add(1001 + 3, portraitArr[3]);
-		protraitDate.Add(1002 + 0, portraitArr[4]);
-		protraitDate.Add(1002 + 1, portraitArr[5]);
-		protraitDate.Add(1002 + 2, portraitArr[6]);
-		protraitDate.Add(1002 + 3, portraitArr[7]);
-
+		protraitDate.Add(2002 + 0, portraitArr[4]);
+		protraitDate.Add(2002 + 1, portraitArr[5]);
+		protraitDate.Add(2002 + 2, portraitArr[6]);
+		protraitDate.Add(2002 + 3, portraitArr[7]);
 	}
 	public string GetTalk(int id, int talkIndex) {
 		if(talkIndex == talkData[id].Length) {

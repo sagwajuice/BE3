@@ -13,7 +13,6 @@ public class PlayerAction : MonoBehaviour
     private Animator anim;
     private Vector3 dirVec;
     private GameObject scanObj;
-    
 
     void Start() {
         rigid = GetComponent<Rigidbody2D>();
@@ -35,7 +34,7 @@ public class PlayerAction : MonoBehaviour
         else if(vUp || hUp) {
             isHorizontalMove = h != 0;
         }
-        //애니메이션 
+        //애니메이션
         if(anim.GetInteger("HAxis") != h) {
             anim.SetBool("isChange", true);
             anim.SetInteger("HAxis", (int)h);
@@ -45,7 +44,7 @@ public class PlayerAction : MonoBehaviour
             anim.SetInteger("VAxis", (int)v);
         }
 		else { anim.SetBool("isChange", false); }
-        //이동 
+        //이동
         if(vDown && v == 1) {
             dirVec = Vector3.up;
         }
@@ -58,16 +57,16 @@ public class PlayerAction : MonoBehaviour
         else if(hDown && h == 1) {
             dirVec = Vector3.right;
         }
-		//스캔 오브젝트 
+		//스캔 오브젝트
 		if(Input.GetButtonDown("Jump") && scanObj != null) {
             gManager.Action(scanObj);
         }
     }
 	private void FixedUpdate() {
-        //이동 
+        //이동
         Vector2 moveVec = isHorizontalMove ? new Vector2(h, 0) : new Vector2(0, v);
         rigid.velocity = moveVec * speed;
-        //레이캐스트 
+        //레이캐스트
         Debug.DrawRay(rigid.position, dirVec * 1f, new Color(1, 1, 0));
         RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 0.7f, LayerMask.GetMask("Obj"));
         if(rayHit.collider != null) {
