@@ -14,8 +14,9 @@ public class QuestManager : MonoBehaviour
         GenerateData();
     }
     void GenerateData() {
-        questList.Add(10, new QuestData("첫 마을 임무", new int[] {1001, 2002}));
-        questList.Add(20, new QuestData("짜증내는 임무", new int[] {3001, 2002}));
+        questList.Add(10, new QuestData("첫 마을 임무", new int[] {1000, 2000}));
+        questList.Add(20, new QuestData("짜증내는 임무", new int[] {3000, 2000}));
+        questList.Add(30, new QuestData("퀘스트 올 클리어!", new int[]{0}));
     }
     public int QuestTalkIndex(int id){
         return questId + questActionIndex;
